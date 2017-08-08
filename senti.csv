@@ -1,0 +1,51 @@
+sentiment,emotion,emotion1,value
+negative ,anger,election,84
+negative ,anger,hillary,27
+negative ,anger,Trump,7
+negative ,disgust,election,2
+negative ,fear,election,269
+negative ,fear,hillary,47
+negative ,fear,Trump,10
+negative ,joy,election,396
+negative ,joy,hillary,112
+negative ,joy,Trump,12
+negative ,sadness,election,217
+negative ,sadness,hillary,58
+negative ,sadness,Trump,8
+negative ,surprise,election,169
+negative ,surprise,hillary,49
+negative ,surprise,Trump,3
+negative ,trust,election,1
+neutral,anger,election,23
+neutral,anger,hillary,6
+neutral,anger,Trump,2
+neutral,disgust,election,2
+neutral,fear,election,79
+neutral,fear,hillary,11
+neutral,fear,Trump,4
+neutral,joy,election,86
+neutral,joy,hillary,25
+neutral,joy,Trump,8
+neutral,sadness,election,50
+neutral,sadness,hillary,14
+neutral,sadness,Trump,7
+neutral,surprise,election,45
+neutral,surprise,hillary,9
+neutral,surprise,Trump,3
+neutral,trust,election,1
+positive,anger,election,26
+positive,anger,hillary,11
+positive,anger,Trump,5
+positive,fear,election,48
+positive,fear,hillary,24
+positive,fear,Trump,1
+positive,joy,election,57
+positive,joy,hillary,44
+positive,joy,Trump,4
+positive,sadness,election,26
+positive,sadness,hillary,18
+positive,sadness,Trump,6
+positive,surprise,election,20
+positive,surprise,hillary,11
+positive,surprise,Trump,2
+positive,trust,hillary,1

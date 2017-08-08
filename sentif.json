@@ -1,0 +1,298 @@
+{
+	"name": "flare",
+	"children": [
+	{
+			"name": "negative ",
+			"children": [{
+					"name": "anger ",
+					"children": [{
+							"name": "Trump",
+							"size": 7
+						}, {
+							"name": "Hillary",
+							"size": 27
+						},
+						{
+							"name": "Election",
+							"size": 84
+						}
+					]
+				},
+				{
+					"name": "disgust ",
+					"children": [{
+						"name": "Election",
+						"size": 2
+					}]
+				},
+
+				{
+					"name": "fear ",
+					"children": [{
+							"name": "Trump",
+							"size": 10
+						}, {
+							"name": "Hillary",
+							"size": 47
+						},
+						{
+							"name": "Election",
+							"size": 269
+						}
+					]
+				},
+
+				{
+					"name": "joy ",
+					"children": [{
+							"name": "Trump",
+							"size": 12
+						}, {
+							"name": "Hillary",
+							"size": 112
+						},
+						{
+							"name": "Election",
+							"size": 396
+						}
+					]
+				},
+
+				{
+					"name": "sadness ",
+					"children": [{
+							"name": "Trump",
+							"size": 8
+						}, {
+							"name": "Hillary",
+							"size": 58
+						},
+						{
+							"name": "Election",
+							"size": 217
+						}
+					]
+				},
+
+				{
+					"name": "surprise ",
+					"children": [{
+							"name": "Trump",
+							"size": 8
+						}, {
+							"name": "Hillary",
+							"size": 49
+						},
+						{
+							"name": "Election",
+							"size": 169
+						}
+					]
+				},
+
+				{
+					"name": "trust ",
+					"children": [{
+						"name": "Election",
+						"size": 1
+					}]
+				}
+			]
+
+		},
+
+		{
+			"name": "neutral ",
+			"children": [{
+					"name": "anger ",
+					"children": [{
+							"name": "Trump",
+							"size": 2
+						}, {
+							"name": "Hillary",
+							"size": 6
+						},
+						{
+							"name": "Election",
+							"size": 23
+						}
+					]
+				},
+				{
+					"name": "disgust ",
+					"children": [{
+						"name": "Election",
+						"size": 2
+					}]
+				},
+
+				{
+					"name": "fear ",
+					"children": [{
+							"name": "Trump",
+							"size": 4
+						}, {
+							"name": "Hillary",
+							"size": 11
+						},
+						{
+							"name": "Election",
+							"size": 79
+						}
+					]
+				},
+
+				{
+					"name": "joy ",
+					"children": [{
+							"name": "Trump",
+							"size": 8
+						}, {
+							"name": "Hillary",
+							"size": 25
+						},
+						{
+							"name": "Election",
+							"size": 86
+						}
+					]
+				},
+
+				{
+					"name": "sadness ",
+					"children": [{
+							"name": "Trump",
+							"size": 7
+						}, {
+							"name": "Hillary",
+							"size": 14
+						},
+						{
+							"name": "Election",
+							"size": 50
+						}
+					]
+				},
+
+				{
+					"name": "surprise ",
+					"children": [{
+							"name": "Trump",
+							"size": 45
+						}, {
+							"name": "Hillary",
+							"size": 9
+						},
+						{
+							"name": "Election",
+							"size": 3
+						}
+					]
+				},
+
+				{
+					"name": "trust ",
+					"children": [{
+						"name": "Election",
+						"size": 1
+					}]
+				}
+			]
+
+		},
+
+		{
+			"name": "Positive ",
+			"children": [{
+					"name": "anger ",
+					"children": [{
+							"name": "Trump",
+							"size": 5
+						}, {
+							"name": "Hillary",
+							"size": 11
+						},
+						{
+							"name": "Election",
+							"size": 26
+						}
+					]
+				},
+				{
+					"name": "fear ",
+					"children": [{
+							"name": "Trump",
+							"size": 1
+						}, {
+							"name": "Hillary",
+							"size": 24
+						},
+						{
+							"name": "Election",
+							"size": 48
+						}
+					]
+				},
+
+				{
+					"name": "joy ",
+					"children": [{
+							"name": "Trump",
+							"size": 6
+						}, {
+							"name": "Hillary",
+							"size": 18
+						},
+						{
+							"name": "Election",
+							"size": 26
+						}
+					]
+				},
+
+				{
+					"name": "sadness ",
+					"children": [{
+							"name": "Trump",
+							"size": 6
+						}, {
+							"name": "Hillary",
+							"size": 18
+						},
+						{
+							"name": "Election",
+							"size": 26
+						}
+					]
+				},
+
+				{
+					"name": "surprise ",
+					"children": [{
+							"name": "Trump",
+							"size": 2
+						}, {
+							"name": "Hillary",
+							"size": 11
+						},
+						{
+							"name": "Election",
+							"size": 20
+						}
+					]
+				},
+
+				{
+					"name": "trust ",
+					"children": [{
+						"name": "Hillary",
+						"size": 1
+					}]
+				}
+			]
+
+		}
+
+	]
+
+}

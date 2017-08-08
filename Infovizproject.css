@@ -1,0 +1,96 @@
+﻿.grandparent {
+    background-color: #ffb3ba;
+}
+
+    .grandparent text {
+        font-weight: bold;
+    }
+
+    .grandparent:hover rect {
+        fill: #808080;
+    }
+
+rect {
+    stroke: white;
+    stroke-width: 1px;
+}
+
+    rect.parent,
+    .grandparent rect {
+        stroke-width: 2px;
+    }
+/*
+    geomap css
+*/
+
+path {
+    fill: none;
+    stroke: #333;
+    stroke-width: .5px;
+}
+
+.land-boundary {
+    stroke-width: 1px;
+}
+
+.site {
+    stroke-width: .5px;
+    stroke: #333;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 20px;
+}
+
+#slider {
+    background-color: #8edcc9;
+    margin: 20px 0 10px 20px;
+}
+
+#chart2 {
+    background-color: #eeeeee;
+}
+
+.Ctooltip {
+    position: absolute;
+    text-align: left;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: steelblue;
+    color: white;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+.line {
+    stroke: #ffb3ba;
+}
+
+    .line:nth-of-type(2) {
+        stroke: #93cc34;
+    }
+
+    .line:nth-of-type(3) {
+        stroke: #6fa6d4;
+    }
+
+.children rect.parent,
+.grandparent rect {
+    cursor: pointer;
+}
+
+.children rect.child {
+    opacity: 0;
+}
+
+.children:hover rect.child {
+    opacity: 1;
+    stroke-width: 1px;
+}
+
+.children:hover rect.parent {
+    opacity: 0;
+}

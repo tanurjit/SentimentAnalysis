@@ -1,0 +1,720 @@
+﻿<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+<style>
+    .grandparent {
+        background-color: #FFD3B2;
+    }
+
+        .grandparent text {
+            font-weight: bold;
+        }
+
+        .grandparent:hover rect {
+            fill: #ffb3ba;
+        }
+
+    rect {
+        stroke: white;
+        stroke-width: 1px;
+    }
+
+        rect.parent,
+        .grandparent rect {
+            stroke-width: 2px;
+        }
+/*
+    geomap css
+*/
+
+    path {
+        fill: none;
+        stroke: #333;
+        stroke-width: .5px;
+    }
+
+    .land-boundary {
+        stroke-width: 1px;
+    }
+    .site {
+        stroke-width: .5px;
+        stroke: #333;
+    }
+
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 20px;
+    }
+
+    #slider {
+        background-color: #f754b3;
+        margin: 20px 0 10px 20px;
+    
+    
+    }
+
+    body , #chart2 {
+        background-color: #eeeeee;
+    }
+    #chart3 {
+        background-color: #FFD3B2;
+    }
+
+    /*#chart1 {
+        background-color: #6bd8f1;
+    }*/
+
+    .Ctooltip {
+        position: absolute;
+        text-align: left;
+        padding: 2px;
+        font: 12px sans-serif;
+        background: steelblue;
+        color:white;
+        border: 0px;
+        border-radius: 8px;
+        pointer-events: none;
+    }
+   
+
+    .line {
+        stroke: #ffb3ba;
+    }
+
+        .line:nth-of-type(2) {
+            stroke: #93cc34;
+        }
+
+        .line:nth-of-type(3) {
+            stroke: #6fa6d4;
+        }
+    .children rect.parent,
+    .grandparent rect {
+        cursor: pointer;
+    }
+
+    .children rect.child {
+        opacity: 0;
+    }
+
+    .children:hover rect.child {
+        opacity: 1;
+        stroke-width: 1px;
+    }
+
+    .children:hover rect.parent {
+        opacity: 0;
+    }
+    .legend rect {
+        fill: white;
+        stroke: black;
+        opacity: 0.8;
+    }
+
+    svg {
+        font: 10px sans-serif;
+    }
+
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+
+    .y.axis path {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+
+    .brush .extent {
+        stroke: #fff;
+        fill-opacity: .125;
+        shape-rendering: crispEdges;
+    }
+
+    .line {
+        fill: none;
+    }
+
+    .legend rect {
+        fill: white;
+        stroke: black;
+        opacity: 0.8;
+    }
+</style>
+<link rel="stylesheet" href="js/css/ion.rangeSlider.css" />
+<link rel="stylesheet" href="js/css/ion.rangeSlider.skinModern.css" />
+<script src="jquery-3.2.1.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="js/js/ion.rangeSlider.min.js"></script>
+<script src=" https://momentjs.com/downloads/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://cdn.rawgit.com/jasondavies/d3-cloud/v1.2.1/build/d3.layout.cloud.js"></script>
+<script src="d3.slider.js"></script>
+    
+</head>
+<body>
+<div class="container" ><h3 style="text-align:center;">Sentiment analysis on US 2016 election day tweets</h3></div>
+    <div class="row" style="margin:0;">
+        <div class="col-sm-5" style="padding-right:0;">
+            <div class="col-sm-12" id="chart1" style="padding:0;"></div>
+            <div class="col-sm-12" id="chart3" style="padding:0;">
+                <button style="margin:1%;" id="change" onclick=" Changechart()" type="button" class="btn btn-info btn-xs pull-right">hashtag</button>
+            </div>
+        </div>
+        <div class="col-sm-7" style="padding-left:0;">
+            <div class="col-sm-12" id="chart2">
+                <div class="col-sm-3"></div> <div class="col-sm-6" style="margin-top:1%;">
+                <input id="slider" /></div><div class="col-sm-3" style="margin-top:1%;">
+                    <button id="resetslider" onclick=" resetslider()" type="button" class="btn btn-info btn-xs" >reset</button>
+                </div>
+            </div>
+            <div class="col-sm-12" id="chart4 " style="padding:0;">
+                <object type="text/html" data="SentimentAnalysis.html" width="770" height="530" style="overflow:auto;"></object>
+                
+            </div>
+            <div class="col-sm-12"><img class="img-rounded img-responsive"src=" tab.png" align="middle" style="margin:auto;" /></div>
+        </div>
+    </div>
+    </body>
+    <script>
+          
+        geomapfilename = "Sentiment.csv";
+        var margin = { top: 30, right: 0, bottom: 20, left: 0 },
+            width = 550,
+            height = 460 - margin.top - margin.bottom,
+            formatNumber = d3.format(",d"),
+            formatPercent = d3.format(".0%"),
+            transitioning;
+        // geomap tooltip
+        // Define the div for the tooltip
+        var tooltip = d3.select("body").append("div")
+            .attr("class", "Ctooltip")
+            .style("opacity", 0);
+        var tooltip2 = d3.select("body").append("div")
+            .attr("class", "Ctooltip")
+            .style("opacity", 0);
+
+        // sets x and y scale to determine size of visible boxes
+        var x = d3.scale.linear()
+            .domain([0, width])
+            .range([0, width]);
+
+        var y = d3.scale.linear()
+            .domain([0, height])
+            .range([0, height]);
+
+        // adding a color scale
+        var color = d3.scale.category20c();
+
+        // introduce color scale here
+
+        var treemap = d3.layout.treemap()
+            .children(function (d, depth) { return depth ? null : d._children; })
+            .sort(function (a, b) { return a.value - b.value; })
+            .ratio(height / width * 0.5 * (1 + Math.sqrt(5)))
+            .round(false);
+
+        var svgtree = d3.select("#chart1").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.bottom + margin.top)
+            .style("margin-left", -margin.left + "px")
+            .style("margin.right", -margin.right + "px")
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+            .style("shape-rendering", "crispEdges");
+
+        var grandparent = svgtree.append("g")
+            .attr("class", "grandparent");
+
+        grandparent.append("rect")
+            .attr("y", -margin.top)
+            .attr("width", width)
+            .attr("height", margin.top)
+            .attr("fill", "grey");
+
+        grandparent.append("text")
+            .attr("x", 6)
+            .attr("y", 6 - margin.top)
+            .attr("dy", ".75em");
+
+        // functions
+
+        function initialize(root) {
+            root.x = root.y = 0;
+            root.dx = width;
+            root.dy = height;
+            root.depth = 0;
+        }
+        function accumulate(d) {
+            return (d._children = d.children)
+                // recursion step, note that p and v are defined by reduce
+                ? d.value = d.children.reduce(function (p, v) { return p + accumulate(v); }, 0)
+                : d.value;
+        }
+
+        function layout(d) {
+            if (d._children) {
+                // treemap nodes comes from the treemap set of functions as part of d3
+                treemap.nodes({ _children: d._children });
+                d._children.forEach(function (c) {
+                    c.x = d.x + c.x * d.dx;
+                    c.y = d.y + c.y * d.dy;
+                    c.dx *= d.dx;
+                    c.dy *= d.dy;
+                    c.parent = d;
+                    // recursion
+                    layout(c);
+                });
+            }
+        }
+
+        d3.json("Treemap.json", function (root) {
+            console.log(root)
+            initialize(root);
+            accumulate(root);
+            layout(root);
+            display(root);
+
+            function display(d) {
+                grandparent
+                    .datum(d.parent)
+                    .on("click", transition)
+                    .select("text")
+                    .text(name(d))
+
+                var g1 = svgtree.insert("g", ".grandparent")
+                    .datum(d)
+                    .attr("class", "depth");
+
+                var g = g1.selectAll("g")
+                    .data(d._children)
+                    .enter().append("g");
+
+                g.filter(function (d) { return d._children; })
+                    .classed("children", true)
+                    .on("click", transition);
+
+                g.selectAll(".child")
+                    .data(function (d) { return d._children || [d]; })
+                    .enter().append("rect")
+                    .attr("class", "child")
+                    .call(rect);
+
+                g.append("rect")
+                    .attr("class", "parent")
+                    .call(rect)
+                    .on("click", function (d) {
+                        //if (!d.children) {
+                        // do something extra if required
+                        //}
+                        console.log(d.name, d.parent, d.grandparent);
+                        // write function to show glyphs of only that emotion or sentiment
+
+                        //var newData2 = _(site_data).filter(function (site) {
+                        //    //console.log("created_at", site.created_at, "value is -", num.from  , num);
+                        //    return (site.name = d.name)
+                        //});
+                        //    console.log(newData2);
+
+                        if (d.name == "Positive") {
+                            geomapfilename = "Positive.csv";
+                        }
+                        else if (d.name == "Negative") {
+                            geomapfilename = "Negative.csv";
+                        }
+                        else if (d.name == "Neutral") {
+                            geomapfilename = "Neutral.csv";
+                        }
+                        else if (d.name == "Anger") {
+                            geomapfilename = "Anger.csv";
+                        }
+                        else if (d.name == "Sadness") {
+                            geomapfilename = "Sadness.csv";
+                        }
+                        else if (d.name == "Joy") {
+                            geomapfilename = "Joy.csv";
+                        }
+                        else if (d.name == "Surprise") {
+                            geomapfilename = "Surprise.csv";
+                        }
+                        else if (d.name == "Trust") {
+                            geomapfilename = "Trust.csv";
+                        }
+                        else if (d.name == "Fear") {
+                            geomapfilename = "Fear.csv";
+                        }
+                        else if (d.name == "Disgust") {
+                            geomapfilename = "Disgust.csv";
+                        }
+                        else if (d.name == "Anticipation") {
+                            geomapfilename = "Anticipation.csv";
+                        }
+                        else if (d.name == "Trump") {
+                            geomapfilename = "Trump.csv";
+                        }
+                        else if (d.name == "Hillary") {
+                            geomapfilename = "Hillary.csv";
+                        }
+                        else if (d.name == "Election") {
+                            geomapfilename = "Election.csv";
+                        }
+                        DrawGeomap(geomapfilename);
+                    })
+                    .append("title")
+                    .text(function (d) { return d.name + " - " })
+                    // formatNumber(d.value)
+                    .append("tspan")
+                    .attr("dy", "2.2em") // offest by 1.2 em
+                    .attr("x", 0)
+                   // .text(function (d) { return d.parent.name + " - " + formatNumber(d.parent.value) })
+                    .append("tspan")
+                    .attr("dy", "1.2em")  // offest by 1.2 em
+                    .attr("x", 0)
+                    .text(function (d) { return Math.round((d.value / d.parent.value) * 100) + "%" + " of " + (d.parent.name)});
+
+                
+
+
+                g.append("text")
+                    .attr("dy", ".75em")
+                    .text(function (d) { return d.name; })
+                    .call(text);
+
+                function transition(d) {
+                    if (transitioning || !d) return;
+                    transitioning = true;
+
+                    var g2 = display(d),
+                        t1 = g1.transition().duration(750),
+                        t2 = g2.transition().duration(750);
+
+                    // Update the domain only after entering new elements.
+                    x.domain([d.x, d.x + d.dx]);
+                    y.domain([d.y, d.y + d.dy]);
+
+                    // Enable anti-aliasing during the transition.
+                    svgtree.style("shape-rendering", null);
+
+                    // Draw child nodes on top of parent nodes.
+                    svgtree.selectAll(".depth").sort(function (a, b) { return a.depth - b.depth; });
+
+                    // Fade-in entering text.
+                    g2.selectAll("text").style("fill-opacity", 0);
+
+                    // Transition to the new view.
+                    t1.selectAll("text").call(text).style("fill-opacity", 0);
+                    t2.selectAll("text").call(text).style("fill-opacity", 1);
+                    t1.selectAll("rect").call(rect);
+                    t2.selectAll("rect").call(rect);
+
+                    // Remove the old node when the transition is finished.
+                    t1.remove().each("end", function () {
+                        svgtree.style("shape-rendering", "crispEdges");
+                        transitioning = false;
+                    });
+                }
+
+                return g;
+            }
+
+            function text(text) {
+                text.attr("x", function (d) { return x(d.x) + 6; })
+                    .attr("y", function (d) { return y(d.y) + 6; })
+                //.attr("fill","lightpink");
+            }
+
+            function rect(rect) {
+                rect.attr("x", function (d) { return x(d.x); })
+                    .attr("y", function (d) { return y(d.y); })
+                    .attr("width", function (d) { return x(d.x + d.dx) - x(d.x); })
+                    .attr("height", function (d) { return y(d.y + d.dy) - y(d.y); })
+                    .attr("fill", function (d) { return d.parent ? color(d.name) : red; });
+            }
+
+            function name(d) {
+                return d.parent
+                    ? name(d.parent) + "." + d.name
+                    : d.name;
+            }
+
+
+
+
+        });
+
+
+
+        // start geo map here //
+
+        var width2 = 750,
+            height2 = 400;
+
+        var mapPath = "https://dl.dropboxusercontent.com/u/232969/cnn/us.json";
+
+        var projection = d3.geo.albersUsa()
+            .scale(750) // related to chart sizing
+            .translate([width2 / 2, height2 / 2]); // position of chart in div and leave space for slider
+
+        var path = d3.geo.path()
+            .projection(projection);  // specify the shape of map
+
+        var svggeo = d3.select("#chart2").append("svg")
+            .attr("height", height2)
+            .attr("width", width2);
+        // ResetPath();
+
+        //  function ResetPath(){
+        d3.json(mapPath, function (error, us) {
+            if (error) return console.error(error);
+
+            svggeo.append("path")
+                .datum(topojson.feature(us, us.objects.land))
+                .attr("d", path)
+                .attr("class", "land-boundary");
+
+            //svggeo.append("path")
+            //    .datum(topojson.mesh(us, us.objects.counties, function (a, b) { return a !== b && (a.id / 1000 | 0) === (b.id / 1000 | 0); }))
+            //    .attr("d", path)
+            //    .attr("class", "county-boundary");
+
+            svggeo.append("path")
+                .datum(topojson.mesh(us, us.objects.states, function (a, b) { return a !== b; }))
+                .attr("d", path)
+                .attr("class", "state-boundary");
+
+            // add color with time //
+
+
+            DrawGeomap(geomapfilename);
+        });
+        //}
+        function DrawGeomap(geomapfilename) {
+            console.log(geomapfilename);
+            d3.csv(geomapfilename)
+                .row(function (d) {
+                    return {
+                        permalink: d.text,
+                        lat: parseFloat(d.lat),
+                        lon: parseFloat(d.lon),
+                        emotion: d.emotion,
+                        senti: d.sentiment,
+                        party: d.party,
+                        polarity: d.polarity,
+                        created_at: moment(d.created_at, "MM/DD/YYYY hh:mm:ss").unix()
+                    };
+
+                })
+                .get(function (err, rows) {
+                    if (err) return console.error(err);
+                    window.site_data = rows;
+                    if (geomapfilename != "Sentiment.csv") {
+                        displaySites(rows);
+                        // to fill colors red blue
+                    }
+                });
+        }
+
+        var displaySites = function (data) {
+            console.log(data);
+            var sites = svggeo.selectAll(".site")
+                .data(data, function (d) {
+                    //console.log("reached" , d.permalink);
+                    return d.permalink;
+                });
+            sites.enter().append("circle")
+                .attr("class", "site")
+                .attr("cx", function (d) {
+                    return projection([d.lon, d.lat])[0];
+                })
+                .attr("cy", function (d) {
+                    return projection([d.lon, d.lat])[1];
+                })
+                .on("mouseover", function (d) {
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    tooltip.html("<b>Text-</b> " +d.permalink +
+                        "<br/><b>sentiment - </b>" + d.senti + "<br/><b>emotion</b>" + d.emotion +
+                        "<br/><b>polority score</b>" + d.polarity +
+                        "<br/><b>For:</b>" + d.party +
+                        "<br/><b>Time:</b>" + d.created_at
+                    )
+                        .style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY - 28) + "px");
+                })
+                .on("mouseout", function (d) {
+                    tooltip.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                })
+                .attr("fill", function (d) { return (d.senti == "positive" ? "#84ffb1" : d.senti == "negative" ? "#f46167" : "#ffc733") })
+                .attr("r", 1)
+                .transition().duration(500)
+                .attr("r", 5)
+
+            // add tooltip;
+
+            sites.exit()
+                .transition().duration(200)
+                .attr("r", 1)
+                .remove();
+        };
+
+        var beginMoment = moment('11/08/2016 03:00:00 AM', "MM/DD/YYYY hh:mm:ss").unix()
+        var endMoment = moment('11/09/2016 02:00:00 PM', "MM/DD/YYYY hh:mm:ss").unix();
+        console.log(beginMoment, endMoment);
+
+        $("#slider").ionRangeSlider({
+            type: "single",
+
+            min: beginMoment,
+            max: endMoment,
+
+            from: beginMoment,
+            //to: endMoment,
+
+
+            prettify: function (num) {
+                return moment(num, "X").format("MMM Do hh:mm A");
+            },
+
+            onChange: function (num) {
+                var newData = _(site_data).filter(function (site) {
+                    //console.log("created_at", site.created_at, "value is -", num.from  , num);
+                    return (site.created_at < num.from);
+
+
+                });
+                //  console.log(newData);
+                displaySites(newData);
+            }
+        });
+
+        var slider = $("#slider").data("ionRangeSlider");
+
+        function resetslider() {
+            slider.reset();
+            geomapfilename = "Sentiment.csv";
+            svggeo.selectAll(".site").remove();
+            DrawGeomap(geomapfilename);
+        }
+
+
+
+        // word cloud starts here //
+
+        var width3 = 500;
+        var height3 = 540;
+        var fill = d3.scale.category20();
+        jsonfile = "words.json";
+        chartname = "#chart3";
+
+        var svgcloud = d3.select(chartname).append("svg")
+            .attr("width", width3)
+            .attr("height", height3);
+
+        DrawCloud(jsonfile, chartname);
+        function Changechart() {
+
+            if (jsonfile == "words.json") {
+                jsonfile = "hashtag.json";
+                $("#change").html("keywords");
+            }
+            else if (jsonfile == "hashtag.json") {
+                jsonfile = "words.json";
+                $("#change").html("hashtags");
+            }
+            svgcloud.remove();
+            svgcloud = d3.select(chartname).append("svg")
+                .attr("width", width3)
+                .attr("height", height3);
+            console.log(1);
+            DrawCloud(jsonfile, chartname);
+        }
+
+        function DrawCloud(jsonfile, chartname) {
+            console.log("hi");
+            d3.json(jsonfile, function (error, data) {
+                data.forEach(function (d) {
+                    return {
+                        text: d.text,
+                        size: d.size,
+                        freq: d.size,
+                    };
+                });
+
+                // console.log(freq);
+                d3.layout.cloud()
+                    .size([width3, height3])
+                    .words(data)
+                    .rotate(function () {
+                        return ~~(Math.random() * 2) * 90;
+                    })
+                    .font("Impact")
+                    .fontSize(function (d) {
+                        return d.size / 2;
+                    })
+                    .on("end", drawSkillCloud)
+                    .start();
+            });
+        }
+
+        // apply D3.js drawing API
+        function drawSkillCloud(words) {
+
+
+            svgcloud.append("g")
+                .attr("transform", "translate(" + ~~(width3 / 2) + "," + ~~(height3 / 2) + ")")
+                .selectAll("text")
+                .data(words)
+                .enter().append("text")
+                .style("font-size", function (d) {
+                    return d.size + "px";
+                    console.log(d.size);
+                })
+                .style("-webkit-touch-callout", "none")
+                .style("-webkit-user-select", "none")
+                .style("-khtml-user-select", "none")
+                .style("-moz-user-select", "none")
+                .style("-ms-user-select", "none")
+                .style("user-select", "none")
+                .style("cursor", "default")
+                .style("font-family", "Impact")
+                .style("fill", function (d, i) {
+                    return fill(i);
+                })
+                .attr("text-anchor", "middle")
+                .attr("transform", function (d) {
+                    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                })
+                .text(function (d) {
+                    return d.text;
+                })
+                .on("mouseover", function (d) {
+                    console.log(d);
+                    tooltip2.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    tooltip2.html(d.size)
+                        .style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY - 28) + "px");
+                })
+                .on("mouseout", function (d) {
+                    tooltip2.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
+
+        }
+// start time series for polarity distribution here //
+
+    </script>

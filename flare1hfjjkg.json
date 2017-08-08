@@ -1,0 +1,31 @@
+{
+ "name": "Sentiment",
+ "children": [
+  {
+   "name": "Positive",
+   "children": [
+    {
+     "name": "joy",
+     "children": [
+      {"name": "Trump", "size": 3938},
+      {"name": "hillary", "size": 3812},
+      {"name": "election", "size": 6714}
+     ]
+    },
+    {
+     "name": "sadness",
+     "children": [
+       {"name": "Trump", "size": 3938},
+      {"name": "hillary", "size": 3812},
+      {"name": "election", "size": 6714}
+     ]
+    },
+    {
+     "name": "optimization",
+     "children": [
+      {"name": "AspectRatioBanker", "size": 7074}
+     ]
+    }
+   ]
+  }
+  ]}

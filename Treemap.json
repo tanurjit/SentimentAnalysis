@@ -1,0 +1,177 @@
+{
+ "name": "Sentiment",
+ "children": [
+  {
+   "name": "Negative",
+   "children": [
+    {
+     "name": "Anger",
+     "children": [
+      {"name": "Election", "value": 84 } , 
+      {"name": "Hillary", "value": 27  } ,
+	  {"name": "Trump", "value": 7  }
+     ]
+    },
+    {
+     "name": "Fear",
+     "children": [
+            {"name": "Election", "value": 269 },
+			{"name": "Hillary", "value": 47  } ,
+			{"name": "Trump", "value": 10  }
+       ]
+    },
+    {
+     "name": "Joy",
+     "children": [
+                  {"name": "Election", "value": 396 },
+			{"name": "Hillary", "value": 112  },
+			{"name": "Trump", "value": 12  }   ]
+    },
+    {
+     "name": "Sadness",
+     "children": [
+                 {"name": "Election", "value": 217 },
+			{"name": "Hillary", "value": 58  },
+			{"name": "Trump", "value": 8  }      
+     ]
+    },
+    {
+     "name": "Surprise",
+     "children": [
+                 {"name": "Election", "value": 169 },
+			{"name": "Hillary", "value": 49  },
+			{"name": "Trump", "value": 3  }
+     ]
+    } , 
+	
+	{
+     "name": "Trust",
+     "children": [
+                 {"name": "Election", "value": 1 }
+     ]
+    } ,
+	{
+     "name": "Disgust",
+     "children": [
+                 {"name": "Election", "value": 2 }
+     ]
+    } 
+	
+   ]
+  },
+
+   {
+   "name": "Neutral",
+   "children": [
+    {
+     "name": "Anger",
+     "children": [
+      {"name": "Election", "value": 23 },
+      {"name": "Hillary", "value": 6  },
+	  {"name": "Trump", "value": 2  }
+     ]
+    },
+	{
+     "name": "Disgust",
+     "children": [
+            {"name": "Election", "value": 2 }
+       ]
+    },
+    {
+     "name": "Fear",
+     "children": [
+            {"name": "Election", "value": 79 },
+			{"name": "Hillary", "value": 11  },
+			{"name": "Trump", "value": 4  }
+       ]
+    },
+    {
+     "name": "Joy",
+     "children": [
+                  {"name": "Election", "value": 86 },
+			{"name": "Hillary", "value": 25  },
+			{"name": "Trump", "value": 8 }   ]
+    },
+    {
+     "name": "Sadness",
+     "children": [
+                 {"name": "Election", "value": 50 },
+			{"name": "Hillary", "value": 14  },
+			{"name": "Trump", "value": 7  }      
+     ]
+    },
+    {
+     "name": "Surprise",
+     "children": [
+                 {"name": "Election", "value": 45 },
+			{"name": "Hillary", "value": 9  },
+			{"name": "Trump", "value": 3 }
+     ]
+    } , 
+	
+	{
+     "name": "Trust",
+     "children": [
+                 {"name": "Election", "value": 1 }
+     ]
+    } 
+	
+   ]
+  } , 
+  
+   {
+   "name": "Positive",
+   "children": [
+    {
+     "name": "Anger",
+     "children": [
+      {"name": "Election", "value": 26 },
+      {"name": "Hillary", "value": 11  },
+	  {"name": "Trump", "value": 5 }
+     ]
+    },
+    {
+     "name": "Fear",
+     "children": [
+            {"name": "Election", "value": 48 },
+			{"name": "Hillary", "value": 24  },
+			{"name": "Trump", "value": 1  }
+       ]
+    },
+    {
+     "name": "Joy",
+     "children": [
+                  {"name": "Election", "value": 57 },
+			{"name": "Hillary", "value": 44  },
+			{"name": "Trump", "value": 4  }   ]
+    },
+    {
+     "name": "Sadness",
+     "children": [
+                 {"name": "Election", "value": 26 },
+			{"name": "Hillary", "value": 18  },
+			{"name": "Trump", "value": 6  }      
+     ]
+    },
+    {
+     "name": "Surprise",
+     "children": [
+                 {"name": "Election", "value": 20 },
+			{"name": "Hillary", "value": 11  },
+			{"name": "Trump", "value": 2  }
+     ]
+    } , 
+	
+	{
+     "name": "Trust",
+     "children": [
+                 {"name": "Hillary", "value": 1 }
+     ]
+    } 
+	
+   ]
+  }
+  
+  
+ ]
+}
